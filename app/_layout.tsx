@@ -1,7 +1,9 @@
+import Splash from '@/components/splash';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Drawer } from 'expo-router/drawer';
 import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import 'react-native-reanimated';
 
@@ -11,6 +13,12 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+
+  const [isAppReady, setIsAppReady] = useState(false);
+
+  if (!isAppReady) {
+    return <Splash onAnimationFinish={() => setIsAppReady(true)} />;
+  }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
